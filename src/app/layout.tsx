@@ -7,6 +7,7 @@ import { ThemeProvider } from "../components/theme-provider";
 import { SwamiBotFloating } from "../components/swami-bot";
 import { PixelsProvider } from "../components/pixels-provider"; // 👈 ajout
 import DataThemeBridge from "../components/data-theme-bridge"; // 👈 ajout
+import ThemeSwitcher from "../components/theme-switcher"; // 👈 ajout
 
 export const metadata: Metadata = {
   title: "SwamiVerse — Je fabrique des mondes jouables",
@@ -23,7 +24,7 @@ export default function RootLayout({
     <html lang="fr" className="h-full" suppressHydrationWarning>
       <body className="min-h-full bg-white text-zinc-900 selection:bg-yellow-300 selection:text-black antialiased dark:bg-black dark:text-zinc-50">
         <ThemeProvider>
-          <DataThemeBridge initial="garage" /> {/* 👈 ajout */}
+          <DataThemeBridge initial="garage" />
           <PixelsProvider>
             <SiteHeader />
             <main className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -32,6 +33,7 @@ export default function RootLayout({
             <SiteFooter />
             <SwamiBotFloating />
           </PixelsProvider>
+          <ThemeSwitcher /> {/* 👈 ajout */}
         </ThemeProvider>
       </body>
     </html>
