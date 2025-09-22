@@ -1,4 +1,3 @@
-// components/flix/PosterDialog.tsx
 "use client";
 
 import Image from "next/image";
@@ -18,7 +17,6 @@ export default function PosterDialog({
   onOpenChange,
   poster,
 }: PosterDialogProps) {
-  // Raccourci clavier optionnel : touche "L" pour fermer si ouvert
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (!open) return;
@@ -31,9 +29,9 @@ export default function PosterDialog({
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-40 bg-black/70 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=closed]:animate-out data-[state=closed]:fade-out-0" />
+        <Dialog.Overlay className="fixed inset-0 z-40 bg-black/70" />
         <Dialog.Content
-          className="fixed left-1/2 top-1/2 z-50 w-[95vw] max-w-3xl -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-zinc-800 bg-zinc-900/95 p-4 text-zinc-100 shadow-2xl backdrop-blur-md focus:outline-none data-[state=open]:animate-in data-[state=open]:zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:zoom-out-95"
+          className="fixed left-1/2 top-1/2 z-50 w-[95vw] max-w-3xl -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-zinc-800 bg-zinc-900/95 p-4 text-zinc-100 shadow-2xl backdrop-blur-md focus:outline-none"
           aria-describedby={undefined}
         >
           {/* Header */}
@@ -43,7 +41,7 @@ export default function PosterDialog({
             </Dialog.Title>
             <Dialog.Close asChild>
               <button
-                className="inline-flex h-9 w-9 items-center justify-center rounded-xl text-zinc-400 ring-1 ring-transparent transition hover:text-zinc-100 hover:ring-zinc-700 focus:outline-none focus:ring-zinc-600"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-xl text-zinc-400 hover:text-zinc-100 focus:outline-none"
                 aria-label="Fermer"
               >
                 <X className="h-5 w-5" />
@@ -53,7 +51,7 @@ export default function PosterDialog({
 
           {/* Body */}
           <div className="grid gap-4 md:grid-cols-2">
-            {/* Image d'affiche */}
+            {/* Image */}
             <div className="relative aspect-[2/3] w-full overflow-hidden rounded-2xl ring-1 ring-zinc-800">
               {poster?.image && (
                 <Image
@@ -82,7 +80,7 @@ export default function PosterDialog({
                 )}
                 {typeof poster?.rating === "number" && (
                   <span className="inline-flex items-center gap-1 rounded-full bg-zinc-800 px-2 py-1 text-xs text-zinc-200">
-                    <Star className="h-3.5 w-3.5" aria-hidden />
+                    <Star className="h-3.5 w-3.5" />
                     {poster.rating.toFixed(1)}
                   </span>
                 )}
@@ -93,22 +91,6 @@ export default function PosterDialog({
                   {poster.synopsis}
                 </p>
               )}
-
-              {/* CTA */}
-              <div className="mt-auto flex flex-wrap gap-2 pt-1">
-                <button className="rounded-2xl bg-yellow-300 px-3 py-2 text-sm font-semibold text-black shadow-sm transition hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-yellow-400/60">
-                  Lire l'affiche
-                </button>
-                <button className="rounded-2xl border border-zinc-700 px-3 py-2 text-sm text-zinc-200 transition hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-zinc-600">
-                  Ajouter aux favoris
-                </button>
-              </div>
-
-              {/* Méta DB */}
-              <p className="pt-2 text-xs text-zinc-500">
-                💾 Données depuis SwamiVerse DB —{" "}
-                {new Date().toISOString().slice(0, 10)}
-              </p>
             </div>
           </div>
         </Dialog.Content>

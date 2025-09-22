@@ -20,11 +20,9 @@ type PixelsContextType = {
 const PixelsContext = createContext<PixelsContextType | undefined>(undefined);
 
 export function PixelsProvider({ children }: { children: React.ReactNode }) {
-  // valeur par défaut = 100, côté SSR
   const [pixels, setPixelsState] = useState<number>(100);
   const [hydrated, setHydrated] = useState(false);
 
-  // Au montage, on lit localStorage
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
@@ -38,7 +36,6 @@ export function PixelsProvider({ children }: { children: React.ReactNode }) {
     setHydrated(true);
   }, []);
 
-  // Sauvegarde à chaque changement (uniquement après hydration)
   useEffect(() => {
     if (hydrated) {
       try {

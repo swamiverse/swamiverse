@@ -1,22 +1,21 @@
-// src/app/flix/page.tsx
 import type { Metadata } from "next";
-import FlixGrid from "@/components/flix/flix-grid";
+import FlixClient from "@/components/flix/flix-client";
 import type { Poster } from "@/types/flix";
 
 export const metadata: Metadata = {
   title: "SwamiFlix — Affiches IA & faux films",
   description:
-    "SwamiFlix : un mur d'affiches IA façon Netflix. Cherche, filtre et découvre des films qui n'existent pas (encore).",
+    "SwamiFlix : un mur d'affiches IA classés par catégorie. Découvre des films qui n'existent pas (encore).",
   openGraph: {
     title: "SwamiFlix — Affiches IA & faux films",
     description:
-      "SwamiFlix : un mur d'affiches IA façon Netflix. Cherche, filtre et découvre des films qui n'existent pas (encore).",
+      "SwamiFlix : un mur d'affiches IA classés par catégorie. Découvre des films qui n'existent pas (encore).",
     type: "website",
     url: "/flix",
   },
 };
 
-// ✅ tout pointe vers /images/flix/posters
+// ✅ toutes les affiches dans /images/flix/posters
 const POSTER_BASE = "/images/flix/posters";
 const posters: Poster[] = [
   {
@@ -270,42 +269,6 @@ const posters: Poster[] = [
   },
 ];
 
-// 🔀 fonction de mélange (Fisher–Yates shuffle)
-function shuffleArray<T>(arr: T[]): T[] {
-  const array = [...arr];
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
-
 export default function FlixPage() {
-  const updated = new Date().toISOString().slice(0, 10);
-  const shuffledPosters = shuffleArray(posters);
-
-  return (
-    <main className="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
-      <header className="mb-6 flex items-end justify-between gap-3">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight text-zinc-100">
-            SwamiFlix
-          </h1>
-          <p className="text-sm text-zinc-400">
-            Affiches IA & faux films — cherche, filtre, regarde les synopsis.
-          </p>
-        </div>
-        <span className="hidden text-xs text-zinc-500 sm:inline">
-          💾 Page générée depuis SwamiVerse DB — MAJ : {updated}
-        </span>
-      </header>
-
-      {/* 🎲 On affiche la version mélangée */}
-      <FlixGrid posters={shuffledPosters} />
-
-      <footer className="mt-8 text-xs text-zinc-500 sm:hidden">
-        💾 Page générée depuis SwamiVerse DB — MAJ : {updated}
-      </footer>
-    </main>
-  );
+  return <FlixClient posters={posters} />;
 }

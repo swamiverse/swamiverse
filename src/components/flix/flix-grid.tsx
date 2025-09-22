@@ -3,7 +3,7 @@
 import { useMemo, useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import type { Poster } from "@/types/flix";
-import PosterDialog from "@/components/flix/PosterDialog";
+import PosterDialog from "@/components/flix/poster-dialog";
 
 export type FlixGridProps = { posters?: Poster[] };
 

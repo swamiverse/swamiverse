@@ -19,7 +19,6 @@ type Universe = {
   title: string;
   slug: string;
   tagline: string;
-  theme: { card: string; accent: string; ring: string };
   icon: IconType;
   imgAlt: string;
 };
@@ -31,11 +30,6 @@ const UNIVERS: Universe[] = [
     title: "Garage",
     slug: "/garage",
     tagline: "Showroom d’interfaces.",
-    theme: {
-      card: "bg-gradient-to-b from-zinc-800 to-zinc-900",
-      accent: "text-yellow-400",
-      ring: "ring-yellow-400/30",
-    },
     icon: Wrench,
     imgAlt: "Porte Garage — anthracite & jaune",
   },
@@ -44,11 +38,6 @@ const UNIVERS: Universe[] = [
     title: "Bibliothèque",
     slug: "/bibliotheque",
     tagline: "Covers IA d’un manga qui n’existe pas encore.",
-    theme: {
-      card: "bg-gradient-to-b from-white to-rose-50",
-      accent: "text-fuchsia-600",
-      ring: "ring-fuchsia-400/30",
-    },
     icon: BookOpen,
     imgAlt: "Porte Bibliothèque — ivoire & magenta",
   },
@@ -57,26 +46,16 @@ const UNIVERS: Universe[] = [
     title: "Accès interdit",
     slug: "/acces-interdit",
     tagline: "Zone expérimentale : trébucher recommandé.",
-    theme: {
-      card: "bg-gradient-to-b from-zinc-900 to-black",
-      accent: "text-emerald-400",
-      ring: "ring-emerald-400/30",
-    },
     icon: ShieldAlert,
     imgAlt: "Porte Accès interdit — noir & néon",
   },
   {
-    id: "garage",
+    id: "flix",
     title: "Flix",
     slug: "/flix",
     tagline: "The Swamiflix.",
-    theme: {
-      card: "bg-gradient-to-b from-zinc-800 to-zinc-900",
-      accent: "text-yellow-400",
-      ring: "ring-yellow-400/30",
-    },
     icon: Wrench,
-    imgAlt: "Porte Flix — anthracite & jaune",
+    imgAlt: "Porte Flix — style cinéma",
   },
 ];
 
@@ -94,7 +73,15 @@ export default function HomePage() {
           initial={{ opacity: 0, y: -6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-black px-3 py-1 text-xs text-zinc-100 shadow-inner ring-1 ring-white/5 dark:border-zinc-800 dark:bg-zinc-900/50 dark:text-zinc-300"
+          className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs shadow-inner ring-1"
+          style={{
+            background: "var(--card)",
+            color: "var(--card-foreground)",
+            borderColor: "var(--border)",
+            // fallback inner shadow doux
+            boxShadow:
+              "inset 0 1px 0 color-mix(in oklab, var(--foreground), transparent 92%)",
+          }}
           aria-live="polite"
         >
           <span role="img" aria-label="disquette">
@@ -115,30 +102,54 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             className="text-4xl font-bold leading-tight tracking-tight sm:text-5xl"
+            style={{
+              color: "var(--foreground)",
+              fontFamily: "var(--font-display)",
+            }}
           >
             Salut, je suis Swami.{" "}
-            <span className="text-yellow-500 dark:text-yellow-300">
+            <span style={{ color: "var(--primary)" }}>
               Je fabrique des mondes jouables.
             </span>
           </motion.h1>
-          <p className="mt-4 max-w-2xl text-lg text-zinc-700 dark:text-zinc-300">
+
+          <p
+            className="mt-4 max-w-2xl text-lg"
+            style={{ color: "var(--muted-foreground)" }}
+          >
             SwamiVerse est mon portfolio expérimental. Chaque page est alimentée
             par une base de contenus. J’y montre mon côté créatif, mon design,
             mon frontend et un peu de backend — avec humour.
           </p>
 
           <div className="mt-6 flex flex-wrap items-center gap-3">
+            {/* CTA primaire */}
             <a
               href="#portes"
-              className="group inline-flex items-center gap-2 rounded-2xl bg-yellow-400 px-4 py-2 font-medium text-black shadow-md ring-2 ring-yellow-200 transition hover:shadow-yellow-300/30 focus:outline-none focus-visible:ring-4 focus-visible:ring-yellow-400/60"
+              className="group inline-flex items-center gap-2 px-4 py-2 font-medium transition focus:outline-none focus-visible:ring-4"
+              style={{
+                borderRadius: "var(--t-radius-xl)",
+                background: "var(--primary)",
+                color: "var(--primary-foreground)",
+                boxShadow: "var(--shadow-md)",
+                outlineColor:
+                  "color-mix(in oklab, var(--ring), transparent 50%)",
+              }}
             >
               Entrer dans le SwamiVerse
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </a>
 
+            {/* CTA secondaires */}
             <Link
               href="/blog"
-              className="inline-flex items-center gap-2 rounded-2xl border border-zinc-300 bg-white px-4 py-2 text-zinc-800 transition hover:bg-zinc-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-zinc-200 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-900/80"
+              className="inline-flex items-center gap-2 px-4 py-2 transition focus:outline-none focus-visible:ring-4"
+              style={{
+                borderRadius: "var(--t-radius-xl)",
+                background: "var(--card)",
+                color: "var(--card-foreground)",
+                border: "1px solid var(--border)",
+              }}
             >
               <Rss className="h-4 w-4" />
               SwamiBlog
@@ -146,16 +157,28 @@ export default function HomePage() {
 
             <Link
               href="/casino"
-              className="inline-flex items-center gap-2 rounded-2xl border border-zinc-300 bg-white px-4 py-2 text-zinc-800 transition hover:bg-zinc-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-zinc-200 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-900/80"
+              className="inline-flex items-center gap-2 px-4 py-2 transition focus:outline-none focus-visible:ring-4"
+              style={{
+                borderRadius: "var(--t-radius-xl)",
+                background: "var(--card)",
+                color: "var(--card-foreground)",
+                border: "1px solid var(--border)",
+              }}
             >
               <Dice6 className="h-4 w-4" />
               SwamiCasino
             </Link>
           </div>
 
-          <div className="mt-4 text-sm text-zinc-500 dark:text-zinc-400">
+          <div
+            className="mt-4 text-sm"
+            style={{ color: "var(--muted-foreground)" }}
+          >
             v1 focus : Home + Blog + Garage ·{" "}
-            <span className="uppercase tracking-wide text-zinc-700 dark:text-zinc-300">
+            <span
+              className="uppercase tracking-wide"
+              style={{ color: "var(--foreground)" }}
+            >
               WIP
             </span>
           </div>
@@ -169,15 +192,40 @@ export default function HomePage() {
           className="lg:col-span-5"
           aria-label="Publicité humoristique"
         >
-          <div className="relative overflow-hidden rounded-3xl border border-zinc-200 bg-black p-5 text-white shadow-xl ring-1 ring-white/5 dark:border-zinc-800 dark:bg-gradient-to-b dark:from-zinc-900 dark:to-black dark:text-zinc-200">
-            <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-yellow-300/10 blur-3xl" />
+          <div
+            className="relative overflow-hidden p-5 shadow-xl ring-1"
+            style={{
+              borderRadius: "var(--t-radius-xl)",
+              background: "var(--card)",
+              color: "var(--card-foreground)",
+              border: "1px solid var(--border)",
+              boxShadow: "var(--shadow-lg)",
+            }}
+          >
+            <div
+              className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full blur-3xl"
+              style={{
+                background:
+                  "color-mix(in oklab, var(--primary), transparent 85%)",
+              }}
+              aria-hidden
+            />
             <div className="flex items-start gap-3">
-              <Sparkles className="mt-0.5 h-5 w-5 text-yellow-300" />
+              <Sparkles
+                className="mt-0.5 h-5 w-5"
+                style={{ color: "var(--primary)" }}
+              />
               <div>
-                <div className="text-sm font-semibold text-yellow-300">
+                <div
+                  className="text-sm font-semibold"
+                  style={{ color: "var(--primary)" }}
+                >
                   ⚠️ Promo laboratoire
                 </div>
-                <p className="mt-1 text-sm">
+                <p
+                  className="mt-1 text-sm"
+                  style={{ color: "var(--muted-foreground)" }}
+                >
                   1 bug acheté = 2 offerts. Pixel premium : brille mieux la
                   nuit.
                 </p>
@@ -185,7 +233,14 @@ export default function HomePage() {
             </div>
             <Link
               href="/acces-interdit"
-              className="mt-4 inline-block rounded-xl bg-zinc-800/80 px-3 py-1.5 text-sm text-zinc-200 ring-1 ring-white/10 transition hover:bg-zinc-800"
+              className="mt-4 inline-block px-3 py-1.5 text-sm transition"
+              style={{
+                borderRadius: "var(--t-radius-sm)",
+                background:
+                  "color-mix(in oklab, var(--secondary), transparent 20%)",
+                color: "var(--foreground)",
+                border: "1px solid var(--border)",
+              }}
             >
               Voir la zone expérimentale
             </Link>
@@ -198,7 +253,7 @@ export default function HomePage() {
         <h2 className="sr-only">Choisir un univers</h2>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {UNIVERS.map((u, i) => (
-            <Door key={u.id} universe={u} index={i} />
+            <Door key={u.id + i} universe={u} index={i} />
           ))}
         </div>
       </section>
@@ -207,29 +262,62 @@ export default function HomePage() {
 }
 
 function Door({ universe, index }: DoorProps) {
-  const { title, slug, tagline, theme, icon: Icon, imgAlt } = universe;
+  const { title, slug, tagline, icon: Icon, imgAlt } = universe;
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: 0.05 * index }}
-      className={`group relative overflow-hidden rounded-3xl
-                  border border-zinc-200 bg-black text-white
-                  dark:border-zinc-800 dark:bg-gradient-to-b dark:from-zinc-900 dark:to-black dark:text-zinc-50
-                  p-5 shadow-xl ring-1 ring-white/5 transition focus:outline-none focus-visible:ring-4 ${theme.ring}`}
+      className="group relative overflow-hidden p-5 transition focus:outline-none"
+      style={{
+        borderRadius: "var(--t-radius-xl)",
+        background: "var(--card)",
+        color: "var(--card-foreground)",
+        border: "1px solid var(--border)",
+        boxShadow: "var(--shadow-lg)",
+        // halo léger au survol
+        outlineColor: "color-mix(in oklab, var(--ring), transparent 70%)",
+      }}
     >
-      <div className={`absolute inset-0 -z-10 ${theme.card}`} aria-hidden />
+      {/* voile décorative, teinte par le thème */}
+      <div
+        className="absolute inset-0 -z-10"
+        style={{
+          background:
+            "linear-gradient(180deg, color-mix(in oklab, var(--primary), transparent 94%), transparent 60%)",
+        }}
+        aria-hidden
+      />
       <div className="flex items-start gap-4">
-        <div className="rounded-2xl bg-white/10 p-3 ring-1 ring-white/20 dark:bg-black/20 dark:ring-white/10">
-          <Icon className={`h-6 w-6 ${theme.accent}`} />
+        <div
+          className="p-3 ring-1"
+          style={{
+            borderRadius: "var(--t-radius-md)",
+            background: "color-mix(in oklab, var(--primary), transparent 90%)",
+            color: "var(--primary)",
+            borderColor: "color-mix(in oklab, var(--primary), transparent 70%)",
+          }}
+        >
+          <Icon className="h-6 w-6" />
         </div>
         <div>
-          <h3 className="text-lg font-semibold">{title}</h3>
-          <p className="mt-1 text-sm text-zinc-200 dark:text-zinc-300">
+          <h3
+            className="text-lg font-semibold"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            {title}
+          </h3>
+          <p
+            className="mt-1 text-sm"
+            style={{ color: "var(--muted-foreground)" }}
+          >
             {tagline}
           </p>
-          <div className="mt-3 inline-flex items-center gap-2 text-sm text-zinc-200 dark:text-zinc-300">
+          <div
+            className="mt-3 inline-flex items-center gap-2 text-sm"
+            style={{ color: "var(--foreground)" }}
+          >
             Explorer
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </div>
@@ -242,7 +330,10 @@ function Door({ universe, index }: DoorProps) {
         aria-label={`Aller à ${title}`}
       />
       <div
-        className="pointer-events-none absolute -bottom-16 right-0 h-40 w-40 rounded-full bg-yellow-300/10 blur-3xl"
+        className="pointer-events-none absolute -bottom-16 right-0 h-40 w-40 rounded-full blur-3xl"
+        style={{
+          background: "color-mix(in oklab, var(--primary), transparent 90%)",
+        }}
         aria-hidden
       />
     </motion.div>
