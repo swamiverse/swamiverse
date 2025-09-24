@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import PixelCounter from "./pixel-counter";
+import PixelCounter from "../pixel-counter";
 import HeaderThemeMenu from "./header-theme-menu"; // menu Jour/Nuit + Thèmes
 import DebugResetButton from "@/components/debug-reset-button";
 

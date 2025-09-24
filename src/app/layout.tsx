@@ -1,14 +1,14 @@
 // src/app/layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
-import { SiteHeader } from "../components/site-header";
-import { SiteFooter } from "../components/site-footer";
-import { ThemeProvider } from "../components/theme-provider";
-import { SwamiBotFloating } from "../components/swami-bot";
+import { SiteHeader } from "../components/layout/site-header";
+import { SiteFooter } from "../components/layout/site-footer";
+import { ThemeProvider } from "../components/layout/theme-provider";
+import { SwamiBotFloating } from "../components/layout/swami-bot";
 import { PixelsProvider } from "../components/pixels-provider";
-import DataThemeBridge from "../components/data-theme-bridge";
-import ThemeSwitcher from "../components/theme-switcher";
-import PXBubbles from "../components/PXBubbles"; // 👈 ajout
+import DataThemeBridge from "../components/layout/data-theme-bridge";
+import ThemeSwitcher from "../components/layout/theme-switcher";
+import PXBubbles from "../components/layout/px-bubbles";
 
 export const metadata: Metadata = {
   title: "SwamiVerse — Je fabrique des mondes jouables",

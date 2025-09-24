@@ -56,8 +56,6 @@ html {
   --radius: 0.625rem;
 
   /* Couleurs par défaut (light) */
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.141 0.005 285.823);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.141 0.005 285.823);
   --popover: oklch(1 0 0);
@@ -107,6 +105,8 @@ html {
   --motion-fast: 160ms;
   --motion-slow: 320ms;
   --easing: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.141 0.005 285.823);
 }
 
 /* Mode .dark (classe) */
