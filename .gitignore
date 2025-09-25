@@ -39,3 +39,18 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# SwamiVerse exports
+projet-arborescence.txt
+*.export.txt
+*.arbo.txt
+
+# IDE
+.vscode/
+.idea/
+
+# Supabase local
+.supabase/
+
+# Turbopack (Next.js experimental cache)
+.turbo/
