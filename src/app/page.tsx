@@ -2,64 +2,13 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import {
-  ArrowRight,
-  Sparkles,
-  Wrench,
-  BookOpen,
-  ShieldAlert,
-  Rss,
-  Dice6,
-} from "lucide-react";
+import { useState, useRef } from "react";
+import { ArrowRight, Rss, Dice6, Wrench, X } from "lucide-react";
 import React from "react";
 
-type IconType = React.ComponentType<React.SVGProps<SVGSVGElement>>;
-type Universe = {
-  id: string;
-  title: string;
-  slug: string;
-  tagline: string;
-  icon: IconType;
-  imgAlt: string;
-};
-type DoorProps = { universe: Universe; index: number };
-
-const UNIVERS: Universe[] = [
-  {
-    id: "garage",
-    title: "Garage",
-    slug: "/garage",
-    tagline: "Showroom d’interfaces.",
-    icon: Wrench,
-    imgAlt: "Porte Garage — anthracite & jaune",
-  },
-  {
-    id: "bibliotheque",
-    title: "Bibliothèque",
-    slug: "/bibliotheque",
-    tagline: "Covers IA d’un manga qui n’existe pas encore.",
-    icon: BookOpen,
-    imgAlt: "Porte Bibliothèque — ivoire & magenta",
-  },
-  {
-    id: "acces-interdit",
-    title: "Accès interdit",
-    slug: "/acces-interdit",
-    tagline: "Zone expérimentale : trébucher recommandé.",
-    icon: ShieldAlert,
-    imgAlt: "Porte Accès interdit — noir & néon",
-  },
-  {
-    id: "flix",
-    title: "Flix",
-    slug: "/flix",
-    tagline: "The Swamiflix.",
-    icon: Wrench,
-    imgAlt: "Porte Flix — style cinéma",
-  },
-];
-
 export default function HomePage() {
+  const [openModal, setOpenModal] = useState<string | null>(null);
+
   const lastUpdated = new Date().toLocaleString("fr-FR", {
     dateStyle: "medium",
     timeStyle: "short",
@@ -73,16 +22,7 @@ export default function HomePage() {
           initial={{ opacity: 0, y: -6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs shadow-inner ring-1"
-          style={{
-            background: "var(--card)",
-            color: "var(--card-foreground)",
-            borderColor: "var(--border)",
-            // fallback inner shadow doux
-            boxShadow:
-              "inset 0 1px 0 color-mix(in oklab, var(--foreground), transparent 92%)",
-          }}
-          aria-live="polite"
+          className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900/50 px-3 py-1 text-xs text-zinc-300 shadow-inner ring-1 ring-white/5"
         >
           <span role="img" aria-label="disquette">
             💾
@@ -102,54 +42,31 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             className="text-4xl font-bold leading-tight tracking-tight sm:text-5xl"
-            style={{
-              color: "var(--foreground)",
-              fontFamily: "var(--font-display)",
-            }}
           >
             Salut, je suis Swami.{" "}
-            <span style={{ color: "var(--primary)" }}>
+            <span className="text-yellow-400">
               Je fabrique des mondes jouables.
             </span>
           </motion.h1>
 
-          <p
-            className="mt-4 max-w-2xl text-lg"
-            style={{ color: "var(--muted-foreground)" }}
-          >
+          <p className="mt-4 max-w-2xl text-lg text-zinc-300">
             SwamiVerse est mon portfolio expérimental. Chaque page est alimentée
             par une base de contenus. J’y montre mon côté créatif, mon design,
             mon frontend et un peu de backend — avec humour.
           </p>
 
           <div className="mt-6 flex flex-wrap items-center gap-3">
-            {/* CTA primaire */}
             <a
               href="#portes"
-              className="group inline-flex items-center gap-2 px-4 py-2 font-medium transition focus:outline-none focus-visible:ring-4"
-              style={{
-                borderRadius: "var(--t-radius-xl)",
-                background: "var(--primary)",
-                color: "var(--primary-foreground)",
-                boxShadow: "var(--shadow-md)",
-                outlineColor:
-                  "color-mix(in oklab, var(--ring), transparent 50%)",
-              }}
+              className="group inline-flex items-center gap-2 px-4 py-2 font-medium rounded-xl bg-yellow-400 text-black shadow-md transition hover:bg-yellow-300"
             >
               Entrer dans le SwamiVerse
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </a>
 
-            {/* CTA secondaires */}
             <Link
               href="/blog"
-              className="inline-flex items-center gap-2 px-4 py-2 transition focus:outline-none focus-visible:ring-4"
-              style={{
-                borderRadius: "var(--t-radius-xl)",
-                background: "var(--card)",
-                color: "var(--card-foreground)",
-                border: "1px solid var(--border)",
-              }}
+              className="inline-flex items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-2 text-zinc-200 hover:bg-zinc-800 transition"
             >
               <Rss className="h-4 w-4" />
               SwamiBlog
@@ -157,90 +74,43 @@ export default function HomePage() {
 
             <Link
               href="/casino"
-              className="inline-flex items-center gap-2 px-4 py-2 transition focus:outline-none focus-visible:ring-4"
-              style={{
-                borderRadius: "var(--t-radius-xl)",
-                background: "var(--card)",
-                color: "var(--card-foreground)",
-                border: "1px solid var(--border)",
-              }}
+              className="inline-flex items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-2 text-zinc-200 hover:bg-zinc-800 transition"
             >
               <Dice6 className="h-4 w-4" />
               SwamiCasino
             </Link>
           </div>
 
-          <div
-            className="mt-4 text-sm"
-            style={{ color: "var(--muted-foreground)" }}
-          >
+          <div className="mt-4 text-sm text-zinc-400">
             v1 focus : Home + Blog + Garage ·{" "}
-            <span
-              className="uppercase tracking-wide"
-              style={{ color: "var(--foreground)" }}
-            >
-              WIP
-            </span>
+            <span className="uppercase tracking-wide text-zinc-200">WIP</span>
           </div>
         </div>
 
-        {/* Aside fun */}
+        {/* Aside droite */}
         <motion.aside
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.05 }}
           className="lg:col-span-5"
-          aria-label="Publicité humoristique"
         >
-          <div
-            className="relative overflow-hidden p-5 shadow-xl ring-1"
-            style={{
-              borderRadius: "var(--t-radius-xl)",
-              background: "var(--card)",
-              color: "var(--card-foreground)",
-              border: "1px solid var(--border)",
-              boxShadow: "var(--shadow-lg)",
-            }}
-          >
-            <div
-              className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full blur-3xl"
-              style={{
-                background:
-                  "color-mix(in oklab, var(--primary), transparent 85%)",
-              }}
-              aria-hidden
-            />
+          <div className="relative overflow-hidden rounded-3xl border border-zinc-800 bg-gradient-to-b from-zinc-900 to-black p-5 shadow-xl ring-1 ring-white/10">
+            <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-yellow-300/10 blur-3xl" />
             <div className="flex items-start gap-3">
-              <Sparkles
-                className="mt-0.5 h-5 w-5"
-                style={{ color: "var(--primary)" }}
-              />
+              <Wrench className="mt-0.5 h-5 w-5 text-yellow-300" />
               <div>
-                <div
-                  className="text-sm font-semibold"
-                  style={{ color: "var(--primary)" }}
-                >
-                  ⚠️ Promo laboratoire
+                <div className="text-sm font-semibold text-yellow-300">
+                  Promo laboratoire
                 </div>
-                <p
-                  className="mt-1 text-sm"
-                  style={{ color: "var(--muted-foreground)" }}
-                >
+                <p className="mt-1 text-sm text-zinc-200">
                   1 bug acheté = 2 offerts. Pixel premium : brille mieux la
                   nuit.
                 </p>
               </div>
             </div>
             <Link
-              href="/acces-interdit"
-              className="mt-4 inline-block px-3 py-1.5 text-sm transition"
-              style={{
-                borderRadius: "var(--t-radius-sm)",
-                background:
-                  "color-mix(in oklab, var(--secondary), transparent 20%)",
-                color: "var(--foreground)",
-                border: "1px solid var(--border)",
-              }}
+              href="/blog"
+              className="mt-4 inline-block rounded-xl bg-zinc-800/80 px-3 py-1.5 text-sm text-zinc-200 ring-1 ring-white/10 transition hover:bg-zinc-800"
             >
               Voir la zone expérimentale
             </Link>
@@ -248,94 +118,186 @@ export default function HomePage() {
         </motion.aside>
       </section>
 
-      {/* Doors */}
-      <section id="portes" className="mt-12">
-        <h2 className="sr-only">Choisir un univers</h2>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {UNIVERS.map((u, i) => (
-            <Door key={u.id + i} universe={u} index={i} />
-          ))}
-        </div>
+      {/* Hubs */}
+      <section
+        id="portes"
+        className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+      >
+        <HubCard
+          title="Le Studio"
+          description="Création artistique : Bibliothèque, Flix, Beats"
+          image="/images/home/studio.webp"
+          onClick={() => setOpenModal("studio")}
+        />
+        <HubCard
+          title="Le Labo"
+          description="Expérimentation : Garage, Lab, Prototypes"
+          image="/images/home/labo.webp"
+          onClick={() => setOpenModal("labo")}
+        />
+        <HubCard
+          title="L’Arcade"
+          description="Jeux & amusement : Casino, Donjon, Aventure"
+          image="/images/home/arcade.webp"
+          onClick={() => setOpenModal("arcade")}
+        />
       </section>
+
+      {/* Modal */}
+      {openModal && (
+        <Modal onClose={() => setOpenModal(null)}>
+          {openModal === "studio" && (
+            <>
+              <h2 className="text-xl font-bold mb-2">🎬 Le Studio</h2>
+              <p className="mb-4 text-zinc-400">Création artistique</p>
+              <div className="flex flex-col gap-2">
+                <Link href="/bibliotheque" className="btn-modal">
+                  📚 Bibliothèque
+                </Link>
+                <Link href="/flix" className="btn-modal">
+                  🎬 Flix
+                </Link>
+                <Link href="/beats" className="btn-modal">
+                  🎵 Beats
+                </Link>
+              </div>
+            </>
+          )}
+
+          {openModal === "labo" && (
+            <>
+              <h2 className="text-xl font-bold mb-2">🧪 Le Labo</h2>
+              <p className="mb-4 text-zinc-400">Expérimentation</p>
+              <div className="flex flex-col gap-2">
+                <Link href="/garage" className="btn-modal">
+                  🛠 Garage
+                </Link>
+                <Link href="/lab" className="btn-modal">
+                  🧪 Lab
+                </Link>
+              </div>
+            </>
+          )}
+
+          {openModal === "arcade" && (
+            <>
+              <h2 className="text-xl font-bold mb-4">🕹 L’Arcade</h2>
+              <p className="mb-6 text-zinc-400">Jeux & amusement</p>
+
+              <div className="grid gap-6">
+                {/* Carte Casino */}
+                <div className="rounded-2xl overflow-hidden border border-zinc-700 bg-zinc-800/50 shadow-md">
+                  <img
+                    src="/images/home/casino.webp"
+                    alt="Casino"
+                    className="h-40 w-full object-cover"
+                  />
+                  <div className="p-4">
+                    <Link
+                      href="/casino"
+                      className="block w-full rounded-xl border border-zinc-700 bg-zinc-900/80 px-4 py-3 text-center text-zinc-100 shadow-md transition hover:bg-yellow-400 hover:text-black"
+                    >
+                      🎰 Casino
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Carte Aventure */}
+                <div className="rounded-2xl overflow-hidden border border-zinc-700 bg-zinc-800/50 shadow-md">
+                  <img
+                    src="/images/home/aventure.webp"
+                    alt="Aventure"
+                    className="h-40 w-full object-cover"
+                  />
+                  <div className="p-4">
+                    <Link
+                      href="/aventure"
+                      className="block w-full rounded-xl border border-zinc-700 bg-zinc-900/80 px-4 py-3 text-center text-zinc-100 shadow-md transition hover:bg-yellow-400 hover:text-black"
+                    >
+                      🗺 Aventure
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+        </Modal>
+      )}
     </>
   );
 }
 
-function Door({ universe, index }: DoorProps) {
-  const { title, slug, tagline, icon: Icon, imgAlt } = universe;
-
+/* HubCard corrigée */
+function HubCard({
+  title,
+  description,
+  image,
+  onClick,
+}: {
+  title: string;
+  description: string;
+  image: string;
+  onClick: () => void;
+}) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: 0.05 * index }}
-      className="group relative overflow-hidden p-5 transition focus:outline-none"
-      style={{
-        borderRadius: "var(--t-radius-xl)",
-        background: "var(--card)",
-        color: "var(--card-foreground)",
-        border: "1px solid var(--border)",
-        boxShadow: "var(--shadow-lg)",
-        // halo léger au survol
-        outlineColor: "color-mix(in oklab, var(--ring), transparent 70%)",
-      }}
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.4 }}
+      className="relative overflow-hidden rounded-2xl shadow-lg group h-64 flex flex-col justify-end"
     >
-      {/* voile décorative, teinte par le thème */}
-      <div
-        className="absolute inset-0 -z-10"
-        style={{
-          background:
-            "linear-gradient(180deg, color-mix(in oklab, var(--primary), transparent 94%), transparent 60%)",
-        }}
-        aria-hidden
+      <img
+        src={image}
+        alt={title}
+        className="absolute inset-0 h-full w-full object-cover"
       />
-      <div className="flex items-start gap-4">
-        <div
-          className="p-3 ring-1"
-          style={{
-            borderRadius: "var(--t-radius-md)",
-            background: "color-mix(in oklab, var(--primary), transparent 90%)",
-            color: "var(--primary)",
-            borderColor: "color-mix(in oklab, var(--primary), transparent 70%)",
-          }}
+      <div className="absolute inset-0 bg-black/50" />
+
+      {/* Bouton séparé avec marge */}
+      <div className="relative z-10 p-4">
+        <button
+          onClick={onClick}
+          className="w-full rounded-xl border border-zinc-700 bg-zinc-900/80 px-4 py-3 text-left text-zinc-100 shadow-md backdrop-blur-sm transition hover:bg-yellow-400 hover:text-black"
         >
-          <Icon className="h-6 w-6" />
-        </div>
-        <div>
-          <h3
-            className="text-lg font-semibold"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            {title}
-          </h3>
-          <p
-            className="mt-1 text-sm"
-            style={{ color: "var(--muted-foreground)" }}
-          >
-            {tagline}
-          </p>
-          <div
-            className="mt-3 inline-flex items-center gap-2 text-sm"
-            style={{ color: "var(--foreground)" }}
-          >
-            Explorer
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-          </div>
-        </div>
+          <h3 className="text-base font-bold leading-tight">{title}</h3>
+          <p className="text-sm opacity-90">{description}</p>
+        </button>
       </div>
-      <span className="sr-only">{imgAlt}</span>
-      <Link
-        href={slug}
-        className="absolute inset-0"
-        aria-label={`Aller à ${title}`}
-      />
-      <div
-        className="pointer-events-none absolute -bottom-16 right-0 h-40 w-40 rounded-full blur-3xl"
-        style={{
-          background: "color-mix(in oklab, var(--primary), transparent 90%)",
-        }}
-        aria-hidden
-      />
     </motion.div>
+  );
+}
+
+/* Modal générique corrigé → clic extérieur ferme */
+function Modal({
+  children,
+  onClose,
+}: {
+  children: React.ReactNode;
+  onClose: () => void;
+}) {
+  const overlayRef = useRef<HTMLDivElement>(null);
+
+  const handleClickOutside = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === overlayRef.current) {
+      onClose();
+    }
+  };
+
+  return (
+    <div
+      ref={overlayRef}
+      onClick={handleClickOutside}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
+    >
+      <div className="relative bg-zinc-900 border border-zinc-700 rounded-xl p-6 shadow-xl w-full max-w-lg">
+        <button
+          onClick={onClose}
+          className="absolute top-2 right-2 text-zinc-400 hover:text-white"
+        >
+          <X className="h-5 w-5" />
+        </button>
+        {children}
+      </div>
+    </div>
   );
 }

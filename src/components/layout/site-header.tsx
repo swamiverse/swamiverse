@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import PixelCounter from "../pixel-counter";
-import HeaderThemeMenu from "./header-theme-menu"; // menu Jour/Nuit + Thèmes
+import HeaderThemeMenu from "./header-theme-menu"; // menu Thèmes
 import DebugResetButton from "@/components/debug-reset-button";
 
 const nav = [
@@ -15,7 +15,7 @@ const nav = [
   { href: "/contact", label: "Contact" },
 ];
 
-export function SiteHeader() {
+export default function SiteHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const btnRef = useRef<HTMLButtonElement | null>(null);
@@ -118,7 +118,7 @@ export function SiteHeader() {
             <PixelCounter />
           </div>
 
-          {/* Menu thème (Jour/Nuit + Thèmes) — Desktop */}
+          {/* Menu thème (Thèmes) — Desktop */}
           <div className="ms-2 hidden sm:block">
             <HeaderThemeMenu size={36} />
           </div>

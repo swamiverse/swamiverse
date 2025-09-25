@@ -1,7 +1,7 @@
 // src/app/layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
-import { SiteHeader } from "../components/layout/site-header";
+import SiteHeader from "@/components/layout/site-header";
 import { SiteFooter } from "../components/layout/site-footer";
 import { ThemeProvider } from "../components/layout/theme-provider";
 import { SwamiBotFloating } from "../components/layout/swami-bot";
