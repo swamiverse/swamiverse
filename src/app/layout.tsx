@@ -23,15 +23,19 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr" className="h-full" suppressHydrationWarning>
-      <body className="min-h-full bg-[var(--background)] text-[var(--foreground)] selection:bg-yellow-300 selection:text-black antialiased">
+      <body className="flex min-h-screen flex-col bg-[var(--background)] text-[var(--foreground)] selection:bg-yellow-300 selection:text-black antialiased">
         <ThemeProvider>
           <DataThemeBridge initial="garage" />
           <PixelsProvider>
             <SiteHeader />
-            <main className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+
+            {/* main prend toute la place dispo entre header et footer */}
+            <main className="mx-auto flex-1 w-full max-w-6xl px-4 sm:px-6 lg:px-8">
               {children}
             </main>
+
             <SiteFooter />
+
             {/* chatbot avec wrapper pour l’ancrage */}
             <div data-swamibot>
               <SwamiBotFloating />
