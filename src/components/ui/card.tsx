@@ -3,24 +3,18 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
-type GlowColor = "yellow" | "violet" | "red" | "none";
-
-const glowMap: Record<GlowColor, string> = {
-  yellow: "shadow-[0_0_25px_5px_rgba(255,215,0,0.6)]",
-  violet: "shadow-[0_0_25px_5px_rgba(138,43,226,0.6)]",
-  red: "shadow-[0_0_25px_5px_rgba(255,0,0,0.6)]",
-  none: "",
-};
-
 const Card = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & { glow?: GlowColor }
->(({ className, glow = "none", ...props }, ref) => (
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
-      "rounded-xl border bg-card text-card-foreground shadow transition",
-      glowMap[glow],
+      // ✅ Radius dynamique branché sur --radius (qui lui-même = --radius-base * --radius-scale)
+      "border bg-card text-card-foreground shadow transition",
+      "rounded-[var(--radius)]",
+      // ✅ Glow activé automatiquement quand html[data-neon="true"]
+      "data-[neon=true]:shadow-[0_0_25px_var(--primary)]",
       className
     )}
     {...props}

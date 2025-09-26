@@ -172,14 +172,79 @@ export default function HomePage() {
       {/* Modal */}
       {openModal && (
         <Modal onClose={() => setOpenModal(null)}>
-          {/* contenu modaux déjà tokenisé */}
+          {openModal === "studio" && (
+            <>
+              <h2 className="text-xl font-bold mb-4">🎬 Le Studio</h2>
+              <div className="flex flex-col gap-4">
+                <CardLink
+                  href="/bibliotheque"
+                  title="📚 Bibliothèque"
+                  image="/images/home/bibliotheque.webp"
+                />
+                <CardLink
+                  href="/flix"
+                  title="🎬 Flix"
+                  image="/images/home/flix.webp"
+                />
+                <CardLink
+                  href="/beats"
+                  title="🎵 Beats"
+                  image="/images/home/beats.webp"
+                />
+              </div>
+            </>
+          )}
+          {openModal === "labo" && (
+            <>
+              <h2 className="text-xl font-bold mb-4">🧪 Le Labo</h2>
+              <div className="flex flex-col gap-4">
+                <CardLink
+                  href="/garage"
+                  title="🛠 Garage"
+                  image="/images/home/garage.webp"
+                />
+                <CardLink
+                  href="/lab"
+                  title="🧪 Lab"
+                  image="/images/home/lab.webp"
+                />
+                <CardLink
+                  href="/prototypes"
+                  title="🧩 Prototypes"
+                  image="/images/home/prototypes.webp"
+                />
+              </div>
+            </>
+          )}
+          {openModal === "arcade" && (
+            <>
+              <h2 className="text-xl font-bold mb-4">🕹 L’Arcade</h2>
+              <div className="flex flex-col gap-4">
+                <CardLink
+                  href="/casino"
+                  title="🎰 Casino"
+                  image="/images/home/casino.webp"
+                />
+                <CardLink
+                  href="/donjon"
+                  title="🐉 Donjon"
+                  image="/images/home/donjon.webp"
+                />
+                <CardLink
+                  href="/aventure"
+                  title="🗺 Aventure"
+                  image="/images/home/aventure.webp"
+                />
+              </div>
+            </>
+          )}
         </Modal>
       )}
     </>
   );
 }
 
-/* HubCard corrigée */
+/* HubCard */
 function HubCard({
   title,
   description,
@@ -203,9 +268,7 @@ function HubCard({
         alt={title}
         className="absolute inset-0 h-full w-full object-cover"
       />
-      {/* masque léger */}
       <div className="absolute inset-0 bg-black/15" />
-
       <div className="relative z-10 p-4">
         <button
           onClick={onClick}
@@ -219,7 +282,33 @@ function HubCard({
   );
 }
 
-/* Modal générique corrigé */
+/* CardLink = bloc image + bouton */
+function CardLink({
+  href,
+  title,
+  image,
+}: {
+  href: string;
+  title: string;
+  image: string;
+}) {
+  return (
+    <Link
+      href={href}
+      className="overflow-hidden rounded-xl border shadow-md transition hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
+      style={{
+        background: "var(--card)",
+        color: "var(--card-foreground)",
+        borderColor: "var(--border)",
+      }}
+    >
+      <img src={image} alt={title} className="w-full h-32 object-cover" />
+      <div className="px-4 py-2 font-medium">{title}</div>
+    </Link>
+  );
+}
+
+/* Modal */
 function Modal({
   children,
   onClose,

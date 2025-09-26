@@ -25,7 +25,11 @@ export default function Modal({
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
     >
       <div
-        className="relative w-full max-w-lg rounded-xl border p-6 shadow-xl"
+        className={`
+          relative w-full max-w-lg border p-6 shadow-xl transition
+          rounded-[var(--radius)]
+          data-[neon=true]:shadow-[0_0_20px_var(--primary)]
+        `}
         style={{
           background: "var(--background)",
           color: "var(--foreground)",
@@ -34,7 +38,7 @@ export default function Modal({
       >
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 rounded-md p-1 opacity-70 hover:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
+          className="absolute top-2 right-2 rounded-[var(--radius)] p-1 opacity-70 hover:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
         >
           <X className="h-5 w-5" />
         </button>

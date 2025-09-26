@@ -69,7 +69,7 @@ export default function PXBubbles({
       const phase = Math.random() * Math.PI * 2;
       const size = rand(46, 64);
       const duration = travelDurationMs * randFloat(0.95, 1.1);
-      const reward = getRandomReward(); // 🎁 nouveau reward
+      const reward = getRandomReward();
 
       return [...cur, { id, yBase, amp, freq, phase, size, duration, reward }];
     });
@@ -82,7 +82,6 @@ export default function PXBubbles({
       audioRef.current.play().catch(() => {});
     }
 
-    // FX visuel au point du clic
     const fxId = crypto.randomUUID();
     setFx((arr) => [
       ...arr,
@@ -92,7 +91,6 @@ export default function PXBubbles({
       setFx((arr) => arr.filter((f) => f.id !== fxId));
     }, 700);
 
-    // Retire la bulle
     setBubbles((cur) => cur.filter((x) => x.id !== b.id));
   }
 
@@ -125,11 +123,12 @@ export default function PXBubbles({
             style={{ left: f.x, top: f.y, transform: "translate(-50%, -50%)" }}
           >
             <div
-              className="rounded-full px-2 py-1 shadow-lg"
+              className="px-2 py-1 shadow-lg"
               style={{
                 background: "var(--primary)",
                 color: "var(--primary-foreground)",
                 border: "2px solid var(--primary-foreground)",
+                borderRadius: "var(--radius)",
               }}
             >
               {f.text}
@@ -190,7 +189,11 @@ function Bubble({
     >
       <motion.span
         whileTap={{ scale: 0.92 }}
-        className="flex items-center justify-center rounded-full font-bold shadow-xl backdrop-blur-md"
+        className={`
+          flex items-center justify-center font-bold shadow-xl backdrop-blur-md
+          rounded-[var(--radius)]
+          data-[neon=true]:shadow-[0_0_12px_var(--primary)]
+        `}
         style={{
           width: b.size,
           height: b.size,
@@ -256,13 +259,13 @@ function randFloat(min: number, max: number) {
  */
 function getRandomReward() {
   const weightedRewards = [
-    { value: 100, weight: 40 }, // commun
+    { value: 100, weight: 40 },
     { value: 200, weight: 25 },
     { value: 500, weight: 15 },
     { value: 1000, weight: 10 },
     { value: 2000, weight: 6 },
     { value: 5000, weight: 3 },
-    { value: 10000, weight: 1 }, // ultra rare
+    { value: 10000, weight: 1 },
   ];
 
   const totalWeight = weightedRewards.reduce((sum, r) => sum + r.weight, 0);

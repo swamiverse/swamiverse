@@ -51,8 +51,11 @@ export default function SiteHeader() {
 
   return (
     <header
-      className="sticky top-0 z-40 border-b bg-[var(--card)]/95 backdrop-blur supports-[backdrop-filter]:bg-[var(--card)]/80"
-      style={{ borderColor: "var(--border)" }}
+      className="sticky top-0 z-40 border-b backdrop-blur"
+      style={{
+        background: "var(--background)", // identique au footer
+        borderColor: "var(--border)",
+      }}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
         {/* Brand */}
@@ -64,12 +67,14 @@ export default function SiteHeader() {
           }}
         >
           <div
-            className="h-8 w-8 rounded-[var(--t-radius-md)] shadow ring-1"
+            className="h-8 w-8 shadow ring-1 flex items-center justify-center"
             style={{
-              background: "var(--primary)", // suit le thème
-              boxShadow: "var(--shadow-sm)",
-              borderColor:
-                "color-mix(in oklab, var(--primary), transparent 70%)",
+              borderRadius: "var(--t-radius-md)", // suit le token
+              background:
+                "linear-gradient(135deg, var(--primary), var(--accent))",
+              border: "1px solid var(--border)", // comme PixelCounter
+              boxShadow:
+                "0 0 6px color-mix(in oklab, var(--primary), transparent 60%)",
             }}
             aria-hidden
           />
@@ -95,18 +100,19 @@ export default function SiteHeader() {
                 key={l.href}
                 href={l.href}
                 aria-current={active ? "page" : undefined}
-                className={[
-                  "px-3 py-2 text-sm transition rounded-[var(--t-radius-sm)] focus:outline-none focus-visible:ring-4",
-                  "hover:opacity-100",
-                ].join(" ")}
+                className="px-3 py-2 text-sm transition focus:outline-none focus-visible:ring-4"
                 style={{
+                  borderRadius: "var(--t-radius-sm)",
                   background: active ? "var(--secondary)" : "transparent",
                   color: active
                     ? "var(--secondary-foreground)"
                     : "var(--foreground)",
-                  outlineColor:
-                    "color-mix(in oklab, var(--ring), transparent 60%)",
-                  borderColor: "var(--border)",
+                  border: active
+                    ? "1px solid var(--border)"
+                    : "1px solid transparent",
+                  boxShadow: active
+                    ? "0 0 8px color-mix(in oklab, var(--ring), transparent 60%)"
+                    : "none",
                 }}
               >
                 {l.label}
@@ -119,12 +125,12 @@ export default function SiteHeader() {
             <PixelCounter />
           </div>
 
-          {/* Menu thème (Thèmes) — Desktop */}
+          {/* Menu thème — Desktop */}
           <div className="ms-2 hidden sm:block">
             <HeaderThemeMenu size={36} />
           </div>
 
-          {/* Bouton Debug Reset dans le header */}
+          {/* Debug Reset */}
           <div className="ms-3">
             <DebugResetButton />
           </div>

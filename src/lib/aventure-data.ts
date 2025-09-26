@@ -1,68 +1,82 @@
-// src/lib/aventure-data.ts
-
-export type Choice = {
-  text: string; // texte affiché au joueur
-  next: string; // id de la scène suivante
-  item?: string; // objet gagné (optionnel)
-};
-
-export type Scene = {
-  id: string; // identifiant unique de la scène
-  text: string; // description narrative
-  choices: Choice[]; // choix proposés
-};
-
-export const scenes: Scene[] = [
+export const aventures = [
   {
-    id: "start",
-    text: "Tu te réveilles au bord d'une forêt mystérieuse. Devant toi, un chemin sombre s'enfonce entre les arbres.",
-    choices: [
-      { text: "Entrer dans la forêt", next: "wolf" },
-      { text: "Faire demi-tour", next: "village" },
-    ],
-  },
-  {
-    id: "wolf",
-    text: "Dans l’ombre, un loup apparaît, ses yeux brillants fixés sur toi.",
-    choices: [
-      { text: "Te défendre à mains nues", next: "defeat" },
-      { text: "Fuir en courant", next: "village" },
+    id: "1",
+    titre: "La Quête du Sandwich Sacré",
+    intro:
+      "Un bruit court : un sandwich légendaire serait caché dans les plaines de SwamiVerse...",
+    steps: [
       {
-        text: "Tenter d’apprivoiser le loup",
-        next: "companion",
-        item: "ami_loup",
+        id: "step1",
+        texte:
+          "Tu pars de ton garage. Devant toi, deux chemins : à gauche une forêt sombre, à droite une taverne animée.",
+        choices: [
+          { label: "Aller dans la forêt", next: "step2" },
+          { label: "Entrer dans la taverne", next: "step3" },
+        ],
+      },
+      {
+        id: "step2",
+        texte:
+          "La forêt grouille de moustiques pixels. Ils veulent te piquer ton solde.",
+        choices: [
+          { label: "Les affronter", next: "end_bad" },
+          { label: "Fuir en criant 'CROISSANT !'", next: "end_funny" },
+        ],
+      },
+      {
+        id: "step3",
+        texte:
+          "À la taverne, un vieux sage propose de vendre une carte contre 10 pixels.",
+        choices: [
+          { label: "Payer 10 pixels", next: "end_good", costPixels: 10 },
+          { label: "Refuser et partir", next: "end_funny" },
+        ],
       },
     ],
-  },
-  {
-    id: "village",
-    text: "Tu arrives dans un petit village abandonné, les maisons sont désertes.",
-    choices: [
-      { text: "Fouiller une maison", next: "house", item: "clé_rouillée" },
-      { text: "Revenir sur tes pas", next: "wolf" },
-    ],
-  },
-  {
-    id: "house",
-    text: "Dans une maison, tu trouves un coffre poussiéreux verrouillé.",
-    choices: [
-      { text: "Essayer d’ouvrir avec la clé rouillée", next: "treasure" },
-      { text: "Laisser tomber", next: "village" },
-    ],
-  },
-  {
-    id: "treasure",
-    text: "Le coffre s’ouvre et révèle une épée scintillante !",
-    choices: [{ text: "Prendre l’épée", next: "wolf", item: "épée" }],
-  },
-  {
-    id: "defeat",
-    text: "Le loup est trop fort... tu t’effondres.",
-    choices: [],
-  },
-  {
-    id: "companion",
-    text: "Incroyable ! Le loup accepte de t’accompagner comme compagnon fidèle.",
-    choices: [{ text: "Retourner au village", next: "village" }],
+    endings: {
+      end_bad: {
+        texte:
+          "Tu as été vidé de tes pixels par les moustiques. Tu récupères un objet : 'Canard en plastique inutile'.",
+        reward: { objetId: "canard_plastique", pixels: 0 },
+      },
+      end_funny: {
+        texte:
+          "Tu cries 'CROISSANT !' si fort que les moustiques explosent. Tu gagnes 5 pixels et une 'Baguette friable'.",
+        reward: { objetId: "baguette_friable", pixels: 5 },
+      },
+      end_good: {
+        texte:
+          "La carte menait au Sandwich Sacré. Tu le manges. Il était épique. Tu gagnes 20 pixels et un 'Sandwich sacré'.",
+        reward: { objetId: "sandwich_sacre", pixels: 20 },
+      },
+    },
   },
 ];
+
+export const objetsMock = {
+  canard_plastique: {
+    id: "canard_plastique",
+    nom: "Canard en plastique inutile",
+    rarete: "Commun",
+    description: "Il ne flotte même pas. Bravo.",
+    image_url: "/images/objets/canard.png",
+    stackable: false,
+  },
+  baguette_friable: {
+    id: "baguette_friable",
+    nom: "Baguette friable",
+    rarete: "Rare",
+    description: "S'effrite à chaque coup. Mais sent bon.",
+    image_url: "/images/objets/baguette.png",
+    stackable: false,
+  },
+  sandwich_sacre: {
+    id: "sandwich_sacre",
+    nom: "Sandwich Sacré",
+    rarete: "Épique",
+    description:
+      "On dirait qu'il contient de la lumière divine et du thon mayo.",
+    image_url: "/images/objets/sandwich.png",
+    stackable: false,
+  },
+};

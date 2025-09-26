@@ -1,36 +1,45 @@
 "use client";
 
-import { motion } from "framer-motion";
-import Link from "next/link";
+import { useInventaire } from "@/lib/useInventaire";
+import { objetsMock } from "@/lib/aventure-data";
 
 export default function InventairePage() {
+  const { items, pixels } = useInventaire();
+
   return (
-    <div className="mt-10 space-y-6">
-      {/* Titre */}
-      <motion.h1
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="text-3xl font-bold tracking-tight"
-        style={{ fontFamily: "var(--font-display)" }}
-      >
-        🎒 Inventaire
-      </motion.h1>
+    <div className="p-6 max-w-3xl mx-auto">
+      <h1 className="text-2xl font-bold mb-4">Inventaire</h1>
+      <p className="mb-4">💰 Pixels : {pixels}</p>
 
-      {/* Placeholder */}
-      <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-4 shadow-inner">
-        <p className="text-sm text-zinc-400">
-          Ton sac est encore vide... pars à l’aventure pour trouver des objets !
-        </p>
+      <div className="grid grid-cols-5 gap-4">
+        {Array.from({ length: 20 }).map((_, idx) => {
+          const slot = items[idx];
+          if (!slot) {
+            return (
+              <div
+                key={idx}
+                className="w-20 h-20 border border-gray-300 rounded bg-gray-50"
+              />
+            );
+          }
+
+          const objet = objetsMock[slot.objetId];
+          return (
+            <div
+              key={idx}
+              className="w-20 h-20 border rounded flex flex-col items-center justify-center text-center bg-white shadow"
+              title={objet.description}
+            >
+              <img
+                src={objet.image_url}
+                alt={objet.nom}
+                className="w-12 h-12"
+              />
+              <span className="text-xs">{slot.quantite}x</span>
+            </div>
+          );
+        })}
       </div>
-
-      {/* Bouton retour */}
-      <Link
-        href="/aventure"
-        className="inline-flex items-center gap-2 rounded-xl border border-zinc-700 bg-zinc-900 px-4 py-2 text-zinc-200 transition hover:bg-zinc-800 focus:outline-none focus-visible:ring-4 focus-visible:ring-white/10"
-      >
-        ← Retour à Aventure
-      </Link>
     </div>
   );
 }

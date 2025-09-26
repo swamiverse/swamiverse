@@ -8,6 +8,7 @@ export default function SiteFooter() {
         background: "var(--background)",
         color: "var(--muted-foreground)",
         borderColor: "var(--border)",
+        borderRadius: "0 var(--t-radius-md) 0 0", // petit arrondi haut si tu veux un effet plus doux
       }}
     >
       <p>
