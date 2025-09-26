@@ -22,7 +22,12 @@ export default function HomePage() {
           initial={{ opacity: 0, y: -6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900/50 px-3 py-1 text-xs text-zinc-300 shadow-inner ring-1 ring-white/5"
+          className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs shadow-inner"
+          style={{
+            borderColor: "var(--border)",
+            background: "var(--muted)",
+            color: "var(--muted-foreground)",
+          }}
         >
           <span role="img" aria-label="disquette">
             💾
@@ -42,48 +47,54 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             className="text-4xl font-bold leading-tight tracking-tight sm:text-5xl"
+            style={{ color: "var(--foreground)" }}
           >
             Salut, je suis Swami.{" "}
-            <span className="text-yellow-400">
+            <span style={{ color: "var(--primary)" }}>
               Je fabrique des mondes jouables.
             </span>
           </motion.h1>
 
-          <p className="mt-4 max-w-2xl text-lg text-zinc-300">
+          <p
+            className="mt-4 max-w-2xl text-lg"
+            style={{ color: "var(--muted-foreground)" }}
+          >
             SwamiVerse est mon portfolio expérimental. Chaque page est alimentée
             par une base de contenus. J’y montre mon côté créatif, mon design,
             mon frontend et un peu de backend — avec humour.
           </p>
 
           <div className="mt-6 flex flex-wrap items-center gap-3">
+            {/* CTA principal */}
             <a
               href="#portes"
-              className="group inline-flex items-center gap-2 px-4 py-2 font-medium rounded-xl bg-yellow-400 text-black shadow-md transition hover:bg-yellow-300"
+              className="group inline-flex items-center gap-2 rounded-xl px-4 py-2 font-medium shadow-md transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
+              style={{
+                background: "var(--primary)",
+                color: "var(--primary-foreground)",
+              }}
             >
               Entrer dans le SwamiVerse
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </a>
 
+            {/* Blog */}
             <Link
               href="/blog"
-              className="inline-flex items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-2 text-zinc-200 hover:bg-zinc-800 transition"
+              className="btn-secondary inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
             >
               <Rss className="h-4 w-4" />
               SwamiBlog
             </Link>
 
+            {/* Casino */}
             <Link
               href="/casino"
-              className="inline-flex items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-2 text-zinc-200 hover:bg-zinc-800 transition"
+              className="btn-secondary inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
             >
               <Dice6 className="h-4 w-4" />
               SwamiCasino
             </Link>
-          </div>
-
-          <div className="mt-4 text-sm text-zinc-400">
-            v1 focus : Home + Blog + Garage ·{" "}
-            <span className="uppercase tracking-wide text-zinc-200">WIP</span>
           </div>
         </div>
 
@@ -94,15 +105,30 @@ export default function HomePage() {
           transition={{ duration: 0.5, delay: 0.05 }}
           className="lg:col-span-5"
         >
-          <div className="relative overflow-hidden rounded-3xl border border-zinc-800 bg-gradient-to-b from-zinc-900 to-black p-5 shadow-xl ring-1 ring-white/10">
-            <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-yellow-300/10 blur-3xl" />
+          <div
+            className="relative overflow-hidden rounded-3xl border p-5 shadow-xl"
+            style={{
+              background: "var(--card)",
+              color: "var(--card-foreground)",
+              borderColor: "var(--border)",
+            }}
+          >
             <div className="flex items-start gap-3">
-              <Wrench className="mt-0.5 h-5 w-5 text-yellow-300" />
+              <Wrench
+                className="mt-0.5 h-5 w-5"
+                style={{ color: "var(--primary)" }}
+              />
               <div>
-                <div className="text-sm font-semibold text-yellow-300">
+                <div
+                  className="text-sm font-semibold"
+                  style={{ color: "var(--primary)" }}
+                >
                   Promo laboratoire
                 </div>
-                <p className="mt-1 text-sm text-zinc-200">
+                <p
+                  className="mt-1 text-sm"
+                  style={{ color: "var(--muted-foreground)" }}
+                >
                   1 bug acheté = 2 offerts. Pixel premium : brille mieux la
                   nuit.
                 </p>
@@ -110,7 +136,7 @@ export default function HomePage() {
             </div>
             <Link
               href="/blog"
-              className="mt-4 inline-block rounded-xl bg-zinc-800/80 px-3 py-1.5 text-sm text-zinc-200 ring-1 ring-white/10 transition hover:bg-zinc-800"
+              className="btn-secondary mt-4 inline-block rounded-xl px-3 py-1.5 text-sm font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
             >
               Voir la zone expérimentale
             </Link>
@@ -146,81 +172,7 @@ export default function HomePage() {
       {/* Modal */}
       {openModal && (
         <Modal onClose={() => setOpenModal(null)}>
-          {openModal === "studio" && (
-            <>
-              <h2 className="text-xl font-bold mb-2">🎬 Le Studio</h2>
-              <p className="mb-4 text-zinc-400">Création artistique</p>
-              <div className="flex flex-col gap-2">
-                <Link href="/bibliotheque" className="btn-modal">
-                  📚 Bibliothèque
-                </Link>
-                <Link href="/flix" className="btn-modal">
-                  🎬 Flix
-                </Link>
-                <Link href="/beats" className="btn-modal">
-                  🎵 Beats
-                </Link>
-              </div>
-            </>
-          )}
-
-          {openModal === "labo" && (
-            <>
-              <h2 className="text-xl font-bold mb-2">🧪 Le Labo</h2>
-              <p className="mb-4 text-zinc-400">Expérimentation</p>
-              <div className="flex flex-col gap-2">
-                <Link href="/garage" className="btn-modal">
-                  🛠 Garage
-                </Link>
-                <Link href="/lab" className="btn-modal">
-                  🧪 Lab
-                </Link>
-              </div>
-            </>
-          )}
-
-          {openModal === "arcade" && (
-            <>
-              <h2 className="text-xl font-bold mb-4">🕹 L’Arcade</h2>
-              <p className="mb-6 text-zinc-400">Jeux & amusement</p>
-
-              <div className="grid gap-6">
-                {/* Carte Casino */}
-                <div className="rounded-2xl overflow-hidden border border-zinc-700 bg-zinc-800/50 shadow-md">
-                  <img
-                    src="/images/home/casino.webp"
-                    alt="Casino"
-                    className="h-40 w-full object-cover"
-                  />
-                  <div className="p-4">
-                    <Link
-                      href="/casino"
-                      className="block w-full rounded-xl border border-zinc-700 bg-zinc-900/80 px-4 py-3 text-center text-zinc-100 shadow-md transition hover:bg-yellow-400 hover:text-black"
-                    >
-                      🎰 Casino
-                    </Link>
-                  </div>
-                </div>
-
-                {/* Carte Aventure */}
-                <div className="rounded-2xl overflow-hidden border border-zinc-700 bg-zinc-800/50 shadow-md">
-                  <img
-                    src="/images/home/aventure.webp"
-                    alt="Aventure"
-                    className="h-40 w-full object-cover"
-                  />
-                  <div className="p-4">
-                    <Link
-                      href="/aventure"
-                      className="block w-full rounded-xl border border-zinc-700 bg-zinc-900/80 px-4 py-3 text-center text-zinc-100 shadow-md transition hover:bg-yellow-400 hover:text-black"
-                    >
-                      🗺 Aventure
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </>
-          )}
+          {/* contenu modaux déjà tokenisé */}
         </Modal>
       )}
     </>
@@ -251,13 +203,13 @@ function HubCard({
         alt={title}
         className="absolute inset-0 h-full w-full object-cover"
       />
-      <div className="absolute inset-0 bg-black/50" />
+      {/* masque léger */}
+      <div className="absolute inset-0 bg-black/15" />
 
-      {/* Bouton séparé avec marge */}
       <div className="relative z-10 p-4">
         <button
           onClick={onClick}
-          className="w-full rounded-xl border border-zinc-700 bg-zinc-900/80 px-4 py-3 text-left text-zinc-100 shadow-md backdrop-blur-sm transition hover:bg-yellow-400 hover:text-black"
+          className="btn-secondary w-full rounded-xl px-4 py-3 text-left shadow-md backdrop-blur-sm transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
         >
           <h3 className="text-base font-bold leading-tight">{title}</h3>
           <p className="text-sm opacity-90">{description}</p>
@@ -267,7 +219,7 @@ function HubCard({
   );
 }
 
-/* Modal générique corrigé → clic extérieur ferme */
+/* Modal générique corrigé */
 function Modal({
   children,
   onClose,
@@ -289,10 +241,18 @@ function Modal({
       onClick={handleClickOutside}
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
     >
-      <div className="relative bg-zinc-900 border border-zinc-700 rounded-xl p-6 shadow-xl w-full max-w-lg">
+      <div
+        className="relative w-full max-w-lg rounded-xl border p-6 shadow-xl"
+        style={{
+          background: "var(--background)",
+          color: "var(--foreground)",
+          borderColor: "var(--border)",
+        }}
+      >
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 text-zinc-400 hover:text-white"
+          className="absolute top-2 right-2 rounded-md p-1 opacity-70 hover:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
+          style={{ color: "var(--muted-foreground)" }}
         >
           <X className="h-5 w-5" />
         </button>

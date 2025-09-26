@@ -5,15 +5,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { usePixels } from "@/components/pixels-provider";
 
 /**
- * PXBubbles — vagues régulières, fluides.
- * - Bulles jaunes (#FFD21E) bord noir.
- * - Trajectoire sinusoïdale régulière sur l’axe Y pendant qu’elle traverse en X.
- * - Anti-doublon de spawn.
- * - Effet “pop” + texte +{reward} PX au clic.
+ * PXBubbles — bulles dynamiques avec thèmes.
+ * - Couleur suit le token `--primary`.
+ * - Récompenses progressives de 100 à 10 000 PX (plus c’est gros, plus c’est rare).
  */
 export default function PXBubbles({
-  spawnEveryMs = 1_000, // fréquence d’apparition
-  travelDurationMs = 18_000, // durée de traversée (lente = fluide)
+  spawnEveryMs = 1_000,
+  travelDurationMs = 18_000,
   label = "PX",
   maxConcurrent = 1,
   sound = false,
@@ -57,7 +55,7 @@ export default function PXBubbles({
 
   function spawn() {
     const now = Date.now();
-    if (now - lastSpawnRef.current < 3000) return; // anti-double déclenchement rapproché
+    if (now - lastSpawnRef.current < 3000) return; // anti-double
     lastSpawnRef.current = now;
 
     setBubbles((cur) => {
@@ -65,19 +63,18 @@ export default function PXBubbles({
 
       const id = crypto.randomUUID();
       const h = window.innerHeight;
-      const yBase = rand(h * 0.25, h * 0.6); // base de la vague (haut/milieu)
-      const amp = rand(36, 72); // amplitude de la vague
-      const freq = randFloat(1.0, 2.0); // nb d’oscillations sur la traversée
-      const phase = Math.random() * Math.PI * 2; // phase unique pour casser les clones
+      const yBase = rand(h * 0.25, h * 0.6);
+      const amp = rand(36, 72);
+      const freq = randFloat(1.0, 2.0);
+      const phase = Math.random() * Math.PI * 2;
       const size = rand(46, 64);
       const duration = travelDurationMs * randFloat(0.95, 1.1);
-      const reward = getRandomReward(); // 🎁 Reward aléatoire pondérée
+      const reward = getRandomReward(); // 🎁 nouveau reward
 
       return [...cur, { id, yBase, amp, freq, phase, size, duration, reward }];
     });
   }
 
-  // Clic: incrémente XP + FX (pop & texte) + retire la bulle
   function handleHit(b: BubbleInstance, clientX: number, clientY: number) {
     addPixels(b.reward, "PX bubble");
     if (audioRef.current) {
@@ -85,7 +82,7 @@ export default function PXBubbles({
       audioRef.current.play().catch(() => {});
     }
 
-    // Effets visuels au point de clic
+    // FX visuel au point du clic
     const fxId = crypto.randomUUID();
     setFx((arr) => [
       ...arr,
@@ -130,9 +127,9 @@ export default function PXBubbles({
             <div
               className="rounded-full px-2 py-1 shadow-lg"
               style={{
-                background: "#FFD21E",
-                color: "#000",
-                border: "2px solid #000",
+                background: "var(--primary)",
+                color: "var(--primary-foreground)",
+                border: "2px solid var(--primary-foreground)",
               }}
             >
               {f.text}
@@ -145,7 +142,7 @@ export default function PXBubbles({
 }
 
 /* ------------------------------------------------------- */
-/* Bubble — trajectoire sinusoïdale régulière et FLUIDE    */
+/* Bubble — trajectoire sinusoïdale                        */
 /* ------------------------------------------------------- */
 
 function Bubble({
@@ -159,7 +156,6 @@ function Bubble({
   onHit: (e: React.MouseEvent<HTMLButtonElement>) => void;
   onExit: () => void;
 }) {
-  // Chemin fluide: on échantillonne la sinusoïde en 60 étapes
   const path = useMemo(() => buildWavePath(b), [b]);
   const times = useMemo(() => evenTimes(path.x.length), [path.x.length]);
   const durationSec = b.duration / 1000;
@@ -179,7 +175,7 @@ function Bubble({
       animate={{
         x: path.x,
         y: path.y,
-        opacity: [0, 1, 1, 0.98, 0.96, 0.94, 0.9, 0.85],
+        opacity: [0, 1, 1, 0.9, 0.8],
         scale: [0.9, 1, 1, 1],
       }}
       transition={{
@@ -192,16 +188,15 @@ function Bubble({
       className="pointer-events-auto absolute select-none outline-none"
       style={{ left: 0, top: 0, transform: "translate(-50%, -50%)" }}
     >
-      {/* Bulle jaune + bord noir */}
       <motion.span
         whileTap={{ scale: 0.92 }}
         className="flex items-center justify-center rounded-full font-bold shadow-xl backdrop-blur-md"
         style={{
           width: b.size,
           height: b.size,
-          background: "#FFD21E",
-          color: "#000",
-          border: "2px solid #000",
+          background: "var(--primary)",
+          color: "var(--primary-foreground)",
+          border: "2px solid var(--primary-foreground)",
         }}
       >
         {label}
@@ -222,7 +217,7 @@ interface BubbleInstance {
   phase: number;
   size: number;
   duration: number;
-  reward: number; // 🎁 ajouté
+  reward: number;
 }
 
 interface FXInstance {
@@ -232,19 +227,13 @@ interface FXInstance {
   text: string;
 }
 
-/**
- * Construit un chemin sinusoïdal fluide:
- * - x: -10vw → 110vw
- * - y: yBase + sin(2π * freq * t + phase) * amp
- * NB: 60 steps + ease linear = mouvement bien lisse.
- */
 function buildWavePath(b: BubbleInstance) {
   const steps = 60;
   const x: string[] = [];
   const y: number[] = [];
   for (let i = 0; i < steps; i++) {
     const t = i / (steps - 1);
-    const xvw = -10 + 120 * t; // -10vw -> 110vw
+    const xvw = -10 + 120 * t;
     x.push(`${xvw}vw`);
     const wave = Math.sin(Math.PI * 2 * b.freq * t + b.phase) * b.amp;
     y.push(b.yBase + wave);
@@ -263,15 +252,17 @@ function randFloat(min: number, max: number) {
 }
 
 /**
- * Tirage aléatoire pondéré pour les rewards
+ * Récompenses progressives avec rareté
  */
 function getRandomReward() {
   const weightedRewards = [
-    { value: 50, weight: 50 }, // fréquent
-    { value: 100, weight: 25 }, // un peu moins
-    { value: 200, weight: 15 }, // encore moins
-    { value: 500, weight: 7 }, // rare
-    { value: 1000, weight: 3 }, // très rare
+    { value: 100, weight: 40 }, // commun
+    { value: 200, weight: 25 },
+    { value: 500, weight: 15 },
+    { value: 1000, weight: 10 },
+    { value: 2000, weight: 6 },
+    { value: 5000, weight: 3 },
+    { value: 10000, weight: 1 }, // ultra rare
   ];
 
   const totalWeight = weightedRewards.reduce((sum, r) => sum + r.weight, 0);
@@ -281,5 +272,5 @@ function getRandomReward() {
     if (rnd < r.weight) return r.value;
     rnd -= r.weight;
   }
-  return 50; // fallback
+  return 100;
 }

@@ -4,16 +4,9 @@ import { useEffect, useState, useMemo } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import {
-  Wrench,
-  Palette,
-  LayoutGrid,
-  Copy,
-  Check,
-  ArrowRight,
-} from "lucide-react";
+import { Wrench, LayoutGrid } from "lucide-react";
 
-// 👉 ajoute ton composant carte
+// 👉 carte projet
 import ModelCard from "@/components/model-card";
 
 type Project = {
@@ -78,7 +71,7 @@ export default function GaragePage() {
   );
 
   if (loading) {
-    return <p className="p-8 text-zinc-500">Chargement…</p>;
+    return <p className="p-8 text-[var(--muted-foreground)]">Chargement…</p>;
   }
 
   return (
@@ -89,7 +82,12 @@ export default function GaragePage() {
           initial={{ opacity: 0, y: -6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900/50 px-3 py-1 text-xs text-zinc-300 shadow-inner ring-1 ring-white/5"
+          className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs shadow-inner"
+          style={{
+            borderColor: "var(--border)",
+            background: "var(--muted)",
+            color: "var(--muted-foreground)",
+          }}
         >
           <span role="img" aria-label="disquette">
             💾
@@ -109,20 +107,22 @@ export default function GaragePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             className="text-4xl font-bold leading-tight tracking-tight sm:text-5xl"
+            style={{ color: "var(--foreground)" }}
           >
             Garage
           </motion.h1>
-          <p className="mt-4 max-w-2xl text-lg text-zinc-300">
+          <p
+            className="mt-4 max-w-2xl text-lg"
+            style={{ color: "var(--muted-foreground)" }}
+          >
             Showroom d’interfaces. On essaie un modèle ?
           </p>
 
           <div className="mt-5 flex flex-wrap gap-2">
             <button
               onClick={() => setFilter(null)}
-              className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm transition ${
-                filter === null
-                  ? "border-yellow-400/40 bg-yellow-300 text-black"
-                  : "border-zinc-800 bg-zinc-900 text-zinc-200 hover:bg-zinc-900/80"
+              className={`btn-secondary inline-flex items-center gap-2 ${
+                filter === null ? "active" : ""
               }`}
             >
               <LayoutGrid className="h-3.5 w-3.5" /> Tout
@@ -131,11 +131,7 @@ export default function GaragePage() {
               <button
                 key={t}
                 onClick={() => setFilter(t)}
-                className={`rounded-full border px-3 py-1 text-sm transition ${
-                  filter === t
-                    ? "border-yellow-400/40 bg-yellow-300 text-black"
-                    : "border-zinc-800 bg-zinc-900 text-zinc-200 hover:bg-zinc-900/80"
-                }`}
+                className={`btn-secondary ${filter === t ? "active" : ""}`}
               >
                 {t}
               </button>
@@ -150,22 +146,37 @@ export default function GaragePage() {
           transition={{ duration: 0.5, delay: 0.05 }}
           className="lg:col-span-5"
         >
-          <div className="relative overflow-hidden rounded-3xl border border-zinc-800 bg-gradient-to-b from-zinc-900 to-black p-5 shadow-xl ring-1 ring-white/10">
-            <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-yellow-300/10 blur-3xl" />
+          <div
+            className="relative overflow-hidden rounded-3xl border p-5 shadow-xl"
+            style={{
+              background: "var(--card)",
+              color: "var(--card-foreground)",
+              borderColor: "var(--border)",
+            }}
+          >
             <div className="flex items-start gap-3">
-              <Wrench className="mt-0.5 h-5 w-5 text-yellow-300" />
+              <Wrench
+                className="mt-0.5 h-5 w-5"
+                style={{ color: "var(--primary)" }}
+              />
               <div>
-                <div className="text-sm font-semibold text-yellow-300">
+                <div
+                  className="text-sm font-semibold"
+                  style={{ color: "var(--primary)" }}
+                >
                   Promo atelier
                 </div>
-                <p className="mt-1 text-sm text-zinc-200">
+                <p
+                  className="mt-1 text-sm"
+                  style={{ color: "var(--muted-foreground)" }}
+                >
                   ⚠️ 1 bug acheté = 2 offerts. Graissage UI inclus.
                 </p>
               </div>
             </div>
             <Link
               href="/blog"
-              className="mt-4 inline-block rounded-xl bg-zinc-800/80 px-3 py-1.5 text-sm text-zinc-200 ring-1 ring-white/10 transition hover:bg-zinc-800"
+              className="btn-secondary mt-4 inline-block text-sm"
             >
               Lire le devlog
             </Link>

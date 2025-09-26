@@ -18,7 +18,7 @@ export default function HubCard({
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.4 }}
-      className="relative overflow-hidden rounded-2xl shadow-lg group h-64 flex flex-col justify-end"
+      className="relative flex h-64 flex-col justify-end overflow-hidden rounded-2xl shadow-lg group"
     >
       <img
         src={image}
@@ -27,12 +27,8 @@ export default function HubCard({
       />
       <div className="absolute inset-0 bg-black/50" />
 
-      {/* Bouton séparé avec marge */}
       <div className="relative z-10 p-4">
-        <button
-          onClick={onClick}
-          className="w-full rounded-xl border border-zinc-700 bg-zinc-900/80 px-4 py-3 text-left text-zinc-100 shadow-md backdrop-blur-sm transition hover:bg-yellow-400 hover:text-black"
-        >
+        <button onClick={onClick} className="btn-secondary w-full text-left">
           <h3 className="text-base font-bold leading-tight">{title}</h3>
           <p className="text-sm opacity-90">{description}</p>
         </button>

@@ -119,72 +119,87 @@ html {
 
 /* Garage */
 [data-theme="garage"] {
-  --background: #0b0b0c;
+  --background: #0a0a0a;
   --foreground: #f5f5f5;
-  --accent: #facc15;
-  --accent-foreground: #0b0b0c;
-  --card: #1a1a1a;
-  --card-foreground: #f5f5f5;
-  --muted: #2a2a2a;
-  --muted-foreground: #d4d4d8;
-  --border: #27272a;
+  --primary: #facc15;
+  --primary-foreground: #111;
+  --secondary: #1e1e1e;
+  --secondary-foreground: #fafafa;
+  --accent: #262626;
+  --accent-foreground: #f5f5f5;
+  --muted: #262626;
+  --muted-foreground: #a1a1aa;
+  --border: #333;
+  --input: #222;
   --ring: #facc15;
 }
 
 /* Bibliothèque */
 [data-theme="bibliotheque"] {
   --background: #faf9f6;
-  --foreground: #111111;
-  --accent: #db2777;
-  --accent-foreground: #ffffff;
-  --card: #ffffff;
-  --card-foreground: #111111;
-  --muted: #f3f4f6;
-  --muted-foreground: #4b5563;
-  --border: #e5e7eb;
+  --foreground: #1a1a1a;
+  --primary: #db2777;
+  --primary-foreground: #fff;
+  --secondary: #f5f5f5;
+  --secondary-foreground: #222;
+  --accent: #e5e5e5;
+  --accent-foreground: #1a1a1a;
+  --muted: #e4e4e7;
+  --muted-foreground: #444;
+  --border: #ddd;
+  --input: #eee;
   --ring: #db2777;
 }
 
 /* Accès interdit */
 [data-theme="acces-interdit"] {
-  --background: #000000;
-  --foreground: #e5e7eb;
-  --accent: #22d3ee;
-  --accent-foreground: #000000;
-  --card: #111111;
-  --card-foreground: #e5e7eb;
-  --muted: #1f2937;
-  --muted-foreground: #9ca3af;
-  --border: #1f2937;
+  --background: #000;
+  --foreground: #f0f0f0;
+  --primary: #22d3ee;
+  --primary-foreground: #000;
+  --secondary: #111;
+  --secondary-foreground: #fff;
+  --accent: #1f2937;
+  --accent-foreground: #e5e7eb;
+  --muted: #1a1a1a;
+  --muted-foreground: #999;
+  --border: #222;
+  --input: #111;
   --ring: #22d3ee;
 }
 
 /* Flix */
 [data-theme="flix"] {
   --background: #0f0f0f;
-  --foreground: #f5f5f5;
-  --accent: #e50914;
-  --accent-foreground: #ffffff;
-  --card: #1a1a1a;
-  --card-foreground: #f5f5f5;
+  --foreground: #ffffff;
+  --primary: #ef4444;
+  --primary-foreground: #fff;
+  --secondary: #1f1f1f;
+  --secondary-foreground: #fff;
+  --accent: #2a2a2a;
+  --accent-foreground: #f5f5f5;
   --muted: #2a2a2a;
-  --muted-foreground: #d4d4d8;
-  --border: #27272a;
-  --ring: #e50914;
+  --muted-foreground: #aaa;
+  --border: #333;
+  --input: #222;
+  --ring: #ef4444;
 }
 
 /* Beats */
 [data-theme="beats"] {
-  --background: #1a1525;
-  --foreground: #f4f4f5;
-  --accent: #f97316;
-  --accent-foreground: #1a1525;
-  --card: #2d1b4e;
-  --card-foreground: #f4f4f5;
-  --muted: #3f2a63;
-  --muted-foreground: #c4b5fd;
-  --border: #3f2a63;
-  --ring: #f97316;
+  --background: #111827;
+  --foreground: #f9fafb;
+  --primary: #3b82f6;
+  --primary-foreground: #fff;
+  --secondary: #1e293b;
+  --secondary-foreground: #e5e7eb;
+  --accent: #374151;
+  --accent-foreground: #f9fafb;
+  --muted: #374151;
+  --muted-foreground: #9ca3af;
+  --border: #334155;
+  --input: #1e293b;
+  --ring: #3b82f6;
 }
 
 /* ================= BASE ================= */
@@ -250,89 +265,41 @@ html {
     transition: background-color 0.3s var(--easing), color 0.3s var(--easing);
   }
 }
-/* ================= THEMES ================= */
-/* Garage, Bibliothèque, Accès interdit, Flix, Beats */
 
-[data-theme="garage"] {
-  --background: #0a0a0a;
-  --foreground: #f5f5f5;
-  --primary: #facc15;
-  --primary-foreground: #111;
-  --secondary: #1e1e1e;
-  --secondary-foreground: #fafafa;
-  --accent: #eab308;
-  --accent-foreground: #111;
-  --muted: #262626;
-  --muted-foreground: #a1a1aa;
-  --border: #333;
-  --input: #222;
-  --ring: #facc15;
+/* ================= CUSTOM BUTTONS ================= */
+.btn-secondary {
+  background: var(--accent);
+  color: var(--accent-foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--t-radius-sm);
+  padding: 0.5rem 1rem; /* px-4 py-2 */
+  font-size: 0.875rem; /* text-sm */
+  transition: background 0.2s, color 0.2s;
+}
+.btn-secondary:hover {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+/* Boutons secondaires = gris par défaut → jaune au survol / actif */
+.btn-secondary {
+  background: var(--accent);
+  color: var(--accent-foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--t-radius-sm);
+  padding: 0.5rem 1rem; /* px-4 py-2 */
+  font-size: 0.875rem; /* text-sm */
+  transition: background 0.2s, color 0.2s;
 }
 
-/* ================= BIBLIOTHÈQUE ================= */
-[data-theme="bibliotheque"] {
-  --background: #faf9f6;
-  --foreground: #1a1a1a;
-  --primary: #db2777;
-  --primary-foreground: #fff;
-  --secondary: #f5f5f5;
-  --secondary-foreground: #222;
-  --accent: #be185d;
-  --accent-foreground: #fff;
-  --muted: #e4e4e7;
-  --muted-foreground: #444;
-  --border: #ddd;
-  --input: #eee;
-  --ring: #db2777;
+/* état hover */
+.btn-secondary:hover {
+  background: var(--primary);
+  color: var(--primary-foreground);
 }
 
-/* ================= ACCÈS INTERDIT ================= */
-[data-theme="acces-interdit"] {
-  --background: #000;
-  --foreground: #f0f0f0;
-  --primary: #22d3ee;
-  --primary-foreground: #000;
-  --secondary: #111;
-  --secondary-foreground: #fff;
-  --accent: #06b6d4;
-  --accent-foreground: #000;
-  --muted: #1a1a1a;
-  --muted-foreground: #999;
-  --border: #222;
-  --input: #111;
-  --ring: #22d3ee;
-}
-
-/* ================= FLIX ================= */
-[data-theme="flix"] {
-  --background: #0f0f0f;
-  --foreground: #ffffff;
-  --primary: #ef4444;
-  --primary-foreground: #fff;
-  --secondary: #1f1f1f;
-  --secondary-foreground: #fff;
-  --accent: #b91c1c;
-  --accent-foreground: #fff;
-  --muted: #2a2a2a;
-  --muted-foreground: #aaa;
-  --border: #333;
-  --input: #222;
-  --ring: #ef4444;
-}
-
-/* ================= BEATS ================= */
-[data-theme="beats"] {
-  --background: #111827;
-  --foreground: #f9fafb;
-  --primary: #3b82f6;
-  --primary-foreground: #fff;
-  --secondary: #1e293b;
-  --secondary-foreground: #e5e7eb;
-  --accent: #2563eb;
-  --accent-foreground: #fff;
-  --muted: #374151;
-  --muted-foreground: #9ca3af;
-  --border: #334155;
-  --input: #1e293b;
-  --ring: #3b82f6;
+/* état actif (sélectionné dans un filtre) */
+.btn-secondary.active {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border-color: color-mix(in oklab, var(--primary), var(--border) 40%);
 }
